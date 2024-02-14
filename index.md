@@ -106,31 +106,118 @@ static double averageWithoutLowest(double[] arr) {
 
 > The `find` command is used to search for files and directories that we would have from the working directory.  We can add modifications 
 
-#### `ls` command without any arguments
-```
-[user@sahara ~/lecture1]$ ls
-Hello.class  Hello.java messages README
-```
-- When the command was run, the working directory was `~/lecture1` and after the command was run, the working directory stayed `~/lecture1` but listed out the directories and files in the directory.
-- When this command is run without any arguments, the command lists out all of the directories and files in the directory itself.  The directories found in the working directory are listed as bold while the files are listed regularly 
-- The output is not an error as shown above, the command was able to list all the files and directories found in the working directory.
-- *It is important to note that **`messages`** was bold in the terminal and for formatting reasons couldn't be bold in the code block above.*
+#### Command-line Option #1: `-iname`
 
-#### `ls` command with the path to a directory
+**Example One:**
+Working Directory `./techical/plos`
+```bash
+chanabattura@SSVCBITSupport:/mnt/c/Users/chara/OneDrive/Desktop/CSE 15L/docsearch/technical/plos$ find -iname "*pbio*"
+./journal.pbio.0020001.txt
+./journal.pbio.0020010.txt
+./journal.pbio.0020012.txt
 ```
-[user@sahara ~]$ ls lecture1/
-Hello.class  Hello.java  messages  README
-```
-- When the command was run, the working directory was `~/`, and after the command was run, the working directory stayed `~/` but listed out the directories and files in the directory specified.
-- When this command is run with the path to a directory, the command lists all the files and directories in the specified directory.  The directories found in the working directory are listed as bold while the files are listed regularly
-- The output is not an error as shown above, the command was able to list all the files and directories found in `lecture1\`.
-- *It is important to note that **`messages`** was bold in the terminal and for formatting reasons couldn't be bold in the code block above.*
+> The command searches for all the entries that have the name "pbio" surrounded with some string next to them and before them.  This is called a partial search
 
-#### `ls` command with the path to a file
+**Example Two**
+Working Directory `./techical/biomed`
+```bash
+chanabattura@SSVCBITSupport:/mnt/c/Users/chara/OneDrive/Desktop/CSE 15L/docsearch/technical/biomed$ find -iname "*research*"
+./gb-2000-1-1-research002.txt
+./gb-2000-1-2-research0003.txt
+./gb-2001-2-10-research0041.txt
 ```
-[user@sahara ~]$ ls lecture1/messages/en-us.txt 
-lecture1/messages/en-us.txt
+> The command searches for all the entries that have the name "research" surrounded with some string next to them and before them.  This is called a partial search
+
+This command is useful because it allows you to search for files without having to know the exact case or words that may be used in the name.
+
+
+#### Command-line Option #2: `-type`
+
+**Example One:**
+Working Directory `./techical/government`
+```bash
+chanabattura@SSVCBITSupport:/mnt/c/Users/chara/OneDrive/Desktop/CSE 15L/docsearch/technical/government$ find -type f
+./About_LSC/Comments_on_semiannual.txt
+./About_LSC/commission_report.txt
+./About_LSC/conference_highlights.txt
+./About_LSC/CONFIG_STANDARDS.txt
 ```
-- When the command was run, the working directory was `~/`, and after the command was run, the working directory stayed as `~/` and instead listed the path to the file itself.
-- When this command is run with the path to a file, the command `ls`, does not have a directory to list out files and directories simply list out the path of the file specified.
-- The output is not an error as shown above, the command was able to list the path of the file itself
+> The command searches and results all files that are found in the working directory. This is denoted by the `f` following `-type`
+
+**Example Two**
+Working Directory `./techical/government`
+```bash
+chanabattura@SSVCBITSupport:/mnt/c/Users/chara/OneDrive/Desktop/CSE 15L/docsearch/technical/government$ find -type d
+.
+./About_LSC
+./Alcohol_Problems
+./Env_Prot_Agen
+./Gen_Account_Office
+./Media
+./Post_Rate_Comm
+```
+> The command searches and results all directories that are found in the working directory. This is denoted by the `d` following `-type`
+
+This command is useful because it allows you to search for a specific type of result, narrowing the search to be far more useful.
+
+#### Command-line Option #3: `-size`
+
+**Example One:**
+Working Directory `./techical/plos`
+```bash
+chanabattura@SSVCBITSupport:/mnt/c/Users/chara/OneDrive/Desktop/CSE 15L/docsearch/technical/plos$ find -size +30k     
+./pmed.0010028.txt
+./pmed.0010036.txt
+./pmed.0020018.txt
+./pmed.0020045.txt
+./pmed.0020059.txt
+./pmed.0020073.txt
+./pmed.0020103.txt
+```
+> The command searches for all the files in the working directory that have a size that is larger than 30 kilobytes
+
+**Example Two**
+Working Directory `./techical/911reports`
+```bash
+chanabattura@SSVCBITSupport:/mnt/c/Users/chara/OneDrive/Desktop/CSE 15L/docsearch/technical/911report$ find -size -70k
+.
+./chapter-10.txt
+./preface.txt
+```
+> The command searches for all the files in the working directory that have a size that is smaller than 70 kilobytes
+
+This command is useful because it allows you to search for files based on the size, narrowing the search parameters with a useful addition
+
+#### Command-line Option #4: `-maxdepth`
+
+**Example One:**
+Working Directory `./techical/government`
+```bash
+chanabattura@SSVCBITSupport:/mnt/c/Users/chara/OneDrive/Desktop/CSE 15L/docsearch/technical/government$ find -maxdepth 2 -name "*.txt"
+./About_LSC/Comments_on_semiannual.txt
+./About_LSC/commission_report.txt
+./About_LSC/conference_highlights.txt
+./About_LSC/CONFIG_STANDARDS.txt
+```
+> The command finds all text files within the `/government` directory and its subdirectories up to a maximum depth of 2
+
+**Example Two**
+Working Directory `./techical/biomed`
+```bash
+chanabattura@SSVCBITSupport:/mnt/c/Users/chara/OneDrive/Desktop/CSE 15L/docsearch/technical/biomed$ find -maxdepth 1 -name "*.txt"
+./1468-6708-3-1.txt
+./1468-6708-3-10.txt
+./1468-6708-3-3.txt
+./1468-6708-3-4.txt
+./1468-6708-3-7.txt
+```
+> The command finds all text files within the `/biomed` directory and its subdirectories up to a maximum depth of 1
+
+This command is useful because it allows users to control the depth of directory traversal, ensuring searches are limited to specific levels.
+
+---
+
+## Sources Used:
+
+- https://www.redhat.com/sysadmin/linux-find-command
+- (Linux Manual Page for `find`) `man find`
